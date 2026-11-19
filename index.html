@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BoxUp × Mark Express</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f1ea;--card:#fff;--line:#e3ddcf;--ink:#1c241e;--mut:#6e6b60;--green:#16311f;--gold:#C8A64B;--red:#b3261e;--ok:#1d7a3e;--blue:#2b55a0;--amb:#9a5b0c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,Arial,sans-serif;color:var(--ink);font-size:14px}
+.top{background:var(--green);color:#fff;padding:14px max(16px,3vw);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.top h1{font-family:Fraunces,Georgia,serif;font-size:22px;margin:0}.top small{opacity:.75;font-size:12.5px}
+.mxlg{background:#fff;color:var(--red);font-weight:800;font-style:italic;border-radius:7px;padding:5px 10px;font-size:13px}
+.tok{margin-left:auto;background:rgba(255,255,255,.12);border-radius:20px;padding:6px 12px;font-size:12.5px}.tok i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#aaa;margin-right:6px}
+.tok.on i{background:#7ddc97}.tok.off i{background:#ff8a80}
+.tabs{display:flex;gap:2px;padding:0 max(16px,3vw);background:#fff;border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs button{border:0;background:none;padding:14px 16px;font:700 14px Inter,Arial;color:var(--mut);border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap}
+.tabs button.on{color:var(--green);border-color:var(--gold)}
+main{padding:20px max(16px,3vw) 40px}
+.kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:18px}
+.k{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px;cursor:default}.k b{font-size:26px;display:block;font-variant-numeric:tabular-nums}.k small{color:var(--mut);font-size:12.5px}
+.k.r b{color:var(--red)}.k.g b{color:var(--ok)}.k.bl b{color:var(--blue)}.k.o b{color:var(--amb)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;min-width:0}
+.card h3{margin:0 0 4px;font-size:16px}.s{color:var(--mut);font-size:13px;margin-bottom:12px}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+input,select,textarea{font:500 14px Inter,Arial;border:1.5px solid #d9d4c6;border-radius:10px;padding:9px 12px;background:#fff;color:var(--ink)}
+input.q{flex:1;min-width:200px;border-color:var(--green)}
+textarea{width:100%;min-height:120px;resize:vertical}
+.b{border-radius:10px;padding:10px 16px;font:700 14px Inter,Arial;border:1px solid #d9d4c6;background:#fff;cursor:pointer;color:var(--ink)}.b:disabled{opacity:.5;cursor:default}
+.b.g{background:var(--green);color:#fff;border-color:var(--green)}.b.sm{padding:6px 10px;font-size:12.5px}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{font-size:11.5px;color:var(--mut);text-align:left;padding:8px;border-bottom:1px solid var(--line);font-weight:600;letter-spacing:.03em;text-transform:uppercase;white-space:nowrap}
+td{padding:8px;border-bottom:1px solid #f1ede3;vertical-align:middle}td.m{font-family:ui-monospace,Menlo,monospace;font-weight:700;white-space:nowrap}
+td input.w{width:70px;padding:5px 8px}
+.pl{display:inline-block;border-radius:20px;padding:2px 10px;font-size:11.5px;font-weight:700;white-space:nowrap}
+.nb{background:#fde8e6;color:var(--red)}.bk{background:#e3f3e8;color:var(--ok)}.tr{background:#e3ecfa;color:var(--blue)}.er{background:#fbefd9;color:var(--amb)}.gy{background:#eee;color:#555}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}@media(max-width:860px){.grid2{grid-template-columns:1fr}}
+.tl>div{border-left:2px solid var(--green);margin-left:6px;padding:0 0 12px 16px;position:relative;font-size:13px;color:var(--mut)}.tl>div b{display:block;color:var(--ink);font-size:14px}
+.tl>div:before{content:'';position:absolute;left:-7px;top:2px;width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid var(--green)}.tl>div.f:before{background:var(--green)}.tl>div:last-child{border-color:transparent}
+.ar{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dashed #eee;font-size:13px}
+.y{color:var(--ok);font-weight:700}.n{color:var(--red);font-weight:700}
+.note{font-size:12.5px;color:var(--mut);margin-top:8px}.err{background:#fde8e6;color:var(--red);border-radius:10px;padding:10px 12px;font-size:13.5px;margin-bottom:12px}
+.warn{background:#fff8e6;border:1px solid #efd9a3;border-radius:12px;padding:10px 12px;font-size:13.5px;margin-bottom:12px}
+.pod{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.pod button{border:1px dashed #c9c2b0;border-radius:10px;padding:16px 8px;background:#fafaf7;font:600 12.5px Inter;color:var(--mut);cursor:pointer}
+.pod img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid #ccc;border-top-color:var(--green);border-radius:50%;animation:sp 1s linear infinite;vertical-align:middle;margin-right:6px}@keyframes sp{to{transform:rotate(360deg)}}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--green);color:#fff;padding:12px 18px;border-radius:12px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.25);z-index:9}
+.cb{width:17px;height:17px;accent-color:var(--green)}
+tr.sel td{background:#f6f9f6}
+a.b{text-decoration:none;display:inline-block}td.m a{color:var(--blue);text-decoration:none}td.m a:hover{text-decoration:underline}
+.clk{cursor:pointer}.clk:hover td{background:#faf8f2}
+</style></head><body>
+<div class="top"><span class="mxlg">MARK EXPRESS</span><div><h1>BoxUp × Mark Express</h1><small>Book AWBs, track, POD, pincode check and branches through the Mark Express API</small></div><span class="tok" id="tok"><i></i>Checking API…</span></div>
+<div class="tabs" id="tabs"><button data-t="book" class="on">📦 Book AWBs</button><button data-t="track">🚚 Track &amp; POD</button><button data-t="pin">📍 Pincode check</button><button data-t="br">🏢 Branches</button><button data-t="stock">🧾 AWB stock</button></div>
+<main id="main"></main>
+<div class="toast" id="toast" hidden></div>
+<script>
+const API = 'https://script.google.com/macros/s/AKfycbxkWlpzmubWJwgFQF7cCDAegDHDFpst-j2AnoLVrk3rVnZL9CuOukEIC_GR43gUlL7e/exec';
+const LINK = 'https://crm.markerp.in/Frm_DocTrackWeb.aspx?docno=';
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const tc = s => String(s || '').toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+function toast(t, ms){ const el = $('toast'); el.textContent = t; el.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => el.hidden = true, ms || 4000); }
+async function mx(op, x){ const r = await fetch(API, { method:'POST', headers:{ 'Content-Type':'text/plain;charset=utf-8' }, body: JSON.stringify(Object.assign({ action:'mxapi', op }, x || {})) }); return r.json(); }
+let TAB = 'book', ORD = null, BOOKED = {}, SEL = new Set(), WT = {}, FIL = { q:'', st:'not' }, LAST = { track:null, pin:null, br:null };
+try{ TAB = localStorage.getItem('mx.tab') || 'book'; }catch(e){}
+
+/* ---------- API status ---------- */
+async function status(){
+  const t = $('tok');
+  try{ const r = await mx('status'); if(r.ok){ t.className = 'tok on'; t.innerHTML = '<i></i>API connected' + (r.validTill ? ' · token valid till ' + new Date(r.validTill).toLocaleTimeString('en-IN', {hour:'numeric', minute:'2-digit'}) : ''); }
+    else { t.className = 'tok off'; t.innerHTML = '<i></i>API not connected'; t.title = r.error || ''; window.API_ERR = r.error; if(TAB !== 'stock') draw(); } }
+  catch(e){ t.className = 'tok off'; t.innerHTML = '<i></i>Cannot reach BoxUp script'; }
+}
+const apiErr = () => window.API_ERR ? `<div class="err">⚠ ${esc(window.API_ERR)}</div>` : '';
+
+/* ---------- orders (Label Log, courier Mark Express) ---------- */
+async function loadOrders(force){
+  if(ORD && !force) return;
+  const [s, b] = await Promise.all([ fetch(API + '?action=sales' + (force ? '&fresh=1' : '') + '&t=' + Date.now()).then(r => r.json()), mx('booked').catch(() => ({ booked:{} })) ]);
+  BOOKED = (b && b.booked) || {};
+  const h = s.headers || [], ci = n => h.indexOf(n);
+  ORD = (s.rows || []).filter(r => /mark\s*exp/i.test(r[ci('Courier')] || '') && r[ci('Tracking ID')]).map(r => {
+    const g = n => r[ci(n)] == null ? '' : String(r[ci(n)]);
+    return { id:g('Order ID'), awb:g('Tracking ID').split(/[,;\s]+/)[0], awbs:g('Tracking ID'), name:g('Name'), phone:g('Phone'), addr:g('Address'), pin:g('Pincode'), city:g('City'), state:g('State'),
+      boxes:Number(g('Total Boxes')) || 1, logged:g('Logged at'), cs:g('Courier Status'), st:g('Order Status'), co:g('Company') || g('Sender Company') };
+  });
+}
+function bookState(o){
+  const b = BOOKED[o.awb];
+  if(b && b.status === 'Booked') return ['booked', 'Booked by BoxUp', 'bk'];
+  if(/^Mark Express:/i.test(o.cs) || /transit|destination|delivered|out for/i.test(o.st)) return ['moving', o.st && o.st !== 'Active' ? 'With Mark Express · ' + o.st : 'With Mark Express', 'tr'];
+  if(b && b.status === 'Failed') return ['failed', 'Failed: ' + (b.msg || ''), 'er'];
+  return ['not', 'Not booked', 'nb'];
+}
+async function drawBook(){
+  const m = $('main');
+  if(!ORD){ m.innerHTML = apiErr() + '<div class="card"><span class="spin"></span>Loading Mark Express orders from the Label Log…</div>';
+    try{ await loadOrders(); }catch(e){ m.innerHTML = '<div class="err">Could not load the Label Log. Check the internet and reload.</div>'; return; } if(TAB !== 'book') return; }
+  const all = ORD.map(o => Object.assign(o, { bs: bookState(o) }));
+  const c = k => all.filter(o => o.bs[0] === k).length;
+  const del = all.filter(o => /deliver/i.test(o.st) && !/out for/i.test(o.st)).length;
+  const q = FIL.q.toLowerCase();
+  const list = all.filter(o => (FIL.st === 'all' || o.bs[0] === FIL.st || (FIL.st === 'not' && o.bs[0] === 'failed')) && (!q || [o.id, o.awb, o.name, o.city, o.pin].join(' ').toLowerCase().indexOf(q) >= 0));
+  const pick = list.filter(o => SEL.has(o.awb) && o.bs[0] !== 'booked' && o.bs[0] !== 'moving');
+  m.innerHTML = apiErr() + `<div class="kp"><div class="k r"><b>${c('not') + c('failed')}</b><small>Printed, not booked</small></div><div class="k g"><b>${c('booked')}</b><small>Booked by BoxUp</small></div>
+    <div class="k bl"><b>${c('moving')}</b><small>Scanned by Mark Express</small></div><div class="k"><b>${del}</b><small>Delivered</small></div><div class="k o"><b id="kStock">…</b><small>AWBs left in stock</small></div></div>
+    <div class="card"><h3>Book with Mark Express</h3><div class="s">Orders printed with a Mark Express label. Tick and press Book: BoxUp sends them to Mark Express (up to 50 at a time), so each AWB is in their system before pickup.</div>
+    <div class="bar"><input class="q" id="q" placeholder="🔍 Search order, name, AWB, city" value="${esc(FIL.q)}">
+      <select id="fst"><option value="not">Not booked</option><option value="booked">Booked by BoxUp</option><option value="moving">Scanned by Mark Express</option><option value="all">All</option></select>
+      <button class="b" id="rf">↻ Reload</button><button class="b g" id="go" ${pick.length ? '' : 'disabled'}>Book ${pick.length} selected</button></div>
+    <div class="tw"><table><thead><tr><th><input type="checkbox" class="cb" id="all"></th><th>Order ID</th><th>AWB</th><th>Receiver</th><th>Destination</th><th>Pcs</th><th>Weight kg</th><th>Status</th></tr></thead><tbody>
+    ${list.length ? list.slice(0, 300).map(o => { const can = o.bs[0] === 'not' || o.bs[0] === 'failed'; return `<tr class="${SEL.has(o.awb) ? 'sel' : ''}"><td>${can ? `<input type="checkbox" class="cb" data-a="${esc(o.awb)}" ${SEL.has(o.awb) ? 'checked' : ''}>` : ''}</td>
+      <td>${esc(o.id)}</td><td class="m"><a href="#" data-tr="${esc(o.awb)}">${esc(o.awb)}</a></td><td>${esc(o.name)}</td><td>${esc((o.city || '').toUpperCase())} · ${esc(o.pin)}</td><td>${o.boxes}</td>
+      <td>${can ? `<input class="w" type="number" min="0.1" step="0.1" data-w="${esc(o.awb)}" value="${WT[o.awb] || o.boxes}">` : esc(WT[o.awb] || '')}</td><td><span class="pl ${o.bs[2]}" title="${esc(o.bs[1])}">${esc(o.bs[1].length > 46 ? o.bs[1].slice(0, 46) + '…' : o.bs[1])}</span></td></tr>`; }).join('')
+    : `<tr><td colspan="8" class="note" style="padding:18px">${FIL.st === 'not' ? 'Every Mark Express order is booked. 🎉' : 'Nothing matches.'}</td></tr>`}
+    </tbody></table></div>
+    <div class="note">Each booking sends: Doc type PARCEL · Pieces = boxes · Weight as typed (default 1 kg per box) · Goods value 0 · Ref no = BoxUp Order ID · Item: Gift hamper.</div></div>`;
+  $('fst').value = FIL.st;
+  let qt; $('q').oninput = e => { clearTimeout(qt); qt = setTimeout(() => { FIL.q = e.target.value; drawBook().then(() => { const i = $('q'); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }); }, 250); };
+  $('fst').onchange = e => { FIL.st = e.target.value; drawBook(); };
+  $('rf').onclick = async () => { ORD = null; drawBook(); };
+  $('all').onchange = e => { list.filter(o => o.bs[0] === 'not' || o.bs[0] === 'failed').slice(0, 50).forEach(o => e.target.checked ? SEL.add(o.awb) : SEL.delete(o.awb)); drawBook(); };
+  m.querySelectorAll('[data-a]').forEach(x => x.onchange = () => { x.checked ? SEL.add(x.dataset.a) : SEL.delete(x.dataset.a); drawBook(); });
+  m.querySelectorAll('[data-w]').forEach(x => x.oninput = () => { WT[x.dataset.w] = x.value; });
+  m.querySelectorAll('[data-tr]').forEach(a => a.onclick = e => { e.preventDefault(); LAST.trackQ = a.dataset.tr; setTab('track'); });
+  $('go').onclick = async () => {
+    if(pick.length > 50){ toast('Pick 50 or fewer at a time.'); return; }
+    if(!confirm(`Book ${pick.length} AWB${pick.length > 1 ? 's' : ''} with Mark Express?`)) return;
+    const items = pick.map(o => { const a = String(o.addr || '').replace(/\s+/g, ' ').trim(); return { awb:o.awb, ref:o.id, dest:o.city, name:o.name, addr1:a.slice(0, 100), addr2:a.slice(100, 200), city:o.city, pin:o.pin, mobile:o.phone, pcs:o.boxes, weight:Number(WT[o.awb]) || o.boxes }; });
+    const b = $('go'); b.disabled = true; b.innerHTML = '<span class="spin"></span>Booking…';
+    let r = null; try{ r = await mx('book', { items, by:'Mark Express page' }); }catch(e){}
+    if(!r || !r.ok){ toast((r && r.error) || 'Could not book. Check the internet.', 6000); b.disabled = false; b.textContent = 'Book ' + pick.length + ' selected'; return; }
+    toast(`Booked ${r.booked}${r.failed ? ' · ' + r.failed + ' failed (see Status)' : ''}.`, 6000);
+    SEL.clear(); const bb = await mx('booked').catch(() => null); if(bb && bb.booked) BOOKED = bb.booked; drawBook();
+  };
+  stockCount();
+}
+async function stockCount(){ try{ const r = await fetch(API + '?action=awbs&courier=mx&t=' + Date.now()).then(x => x.json()); const k = $('kStock'); if(k) k.textContent = (r.free || []).length; window.STOCK = r; }catch(e){} }
+
+/* ---------- track & POD ---------- */
+function drawTrack(){
+  const m = $('main'), d = LAST.track;
+  m.innerHTML = apiErr() + `<div class="bar" style="max-width:720px"><input class="q" id="tq" placeholder="AWB number e.g. 800355305" value="${esc(LAST.trackQ || '')}" inputmode="numeric"><button class="b g" id="tg">Track</button></div><div id="tres"></div>`;
+  $('tg').onclick = () => track($('tq').value.trim()); $('tq').onkeydown = e => { if(e.key === 'Enter') $('tg').click(); };
+  if(d) showTrack(d); else if(LAST.trackQ) track(LAST.trackQ);
+}
+async function track(awb){
+  if(!/^\d{6,}$/.test(awb)){ toast('Type an AWB number.'); return; }
+  LAST.trackQ = awb; $('tres').innerHTML = '<div class="card"><span class="spin"></span>Asking Mark Express…</div>';
+  let r = null; try{ r = await mx('track', { awb }); }catch(e){}
+  if(!r || !r.ok){ $('tres').innerHTML = `<div class="err">${esc((r && r.error) || 'Could not reach Mark Express.')}</div><a class="b" href="${LINK + encodeURIComponent(awb)}" target="_blank" rel="noopener">↗ Open Mark Express site</a>`; return; }
+  LAST.track = r; showTrack(r);
+}
+function showTrack(r){
+  const b = r.booking || {}, o = (ORD || []).find(x => x.awb === r.awb) || null, f = r.final || {}, L = r.last || {}, p = r.proof || {};
+  const ev = (r.delivery || []).concat(r.track || []).slice().reverse();
+  const fin = f.Description || (ev[0] && ev[0].Description) || 'Booked';
+  const cls = /DELIVERED/i.test(fin) && !/UN.?DELIVER|NOT/i.test(fin) ? 'g' : /RTO|RETURN/i.test(fin) ? 'r' : 'bl';
+  $('tres').innerHTML = `<div class="grid2"><div class="card"><h3>${o ? esc(o.id) + ' · ' + esc(o.name) : 'AWB ' + esc(r.awb)}</h3><div class="s">${esc([b.Product, b.GoodsType, (b.Pcs || 1) + ' pcs', 'Booked ' + (b.AWBDate || '') + ' ' + (b.AWBTime || '')].filter(Boolean).join(' · '))}</div>
+    <div class="kp" style="grid-template-columns:1fr 1fr;margin-bottom:12px"><div class="k ${cls}"><small>CURRENT STATUS</small><b style="font-size:18px">${esc(fin)}</b><small>${esc(f.Date || '')}</small></div><div class="k"><small>FROM → TO</small><b style="font-size:15px">${esc(b.AWBFrom || '')} → ${esc(b.AWBTo || '')}</b><small>${esc(b.SenderNM || '')} → ${esc(b.ReceiverNM || '')}</small></div></div>
+    <div class="tl">${ev.map((e, i) => `<div class="${i === 0 ? 'f' : ''}"><b>${esc(e.OpType)} · ${esc(e.EntryBy)}</b>${esc(e.Description)}${e.Receiver ? ' · Receiver ' + esc(e.Receiver) : ''} · ${esc(e.OpDate)} ${esc(e.OpTime)}</div>`).join('')}<div><b>Booked · ${esc(b.AWBFrom || '')}</b>${esc(b.AWBDate || '')} ${esc(b.AWBTime || '')}</div></div>
+    ${L.Branch ? `<div class="note">Last location: <b>${esc(L.Branch)}</b> · ${esc(L.Address || '')}${L.PH ? ' · ' + esc(L.PH) : ''}</div>` : ''}</div>
+    <div class="card"><h3>Proof of delivery</h3><div class="s">Shows once Mark Express delivers. Click to view; right-click the image to save.</div>
+    <div class="pod">${[['drs','📄 Delivery sheet (DRS)', p.DRSImgID],['pod','🧾 POD image', p.PODImgID],['sign','✍ Receiver signature', p.DigitalSignImgID]].map(x => `<button data-k="${x[0]}" data-id="${esc(x[2] || '')}" ${x[2] ? '' : 'disabled'}>${x[1]}<br><small>${x[2] ? 'Click to view' : 'Not yet'}</small></button>`).join('')}</div>
+    <div id="pimg" style="margin-top:12px"></div>
+    <div class="bar" style="margin-top:12px"><a class="b" href="${LINK + encodeURIComponent(r.awb)}" target="_blank" rel="noopener">↗ Open Mark Express site</a><button class="b" id="wa">💬 Share on WhatsApp</button></div></div></div>`;
+  $('tres').querySelectorAll('.pod button[data-id]').forEach(x => x.onclick = async () => {
+    if(!x.dataset.id) return; $('pimg').innerHTML = '<span class="spin"></span>Loading image…';
+    let q = null; try{ q = await mx('img', { kind:x.dataset.k, awb:r.awb, id:x.dataset.id }); }catch(e){}
+    $('pimg').innerHTML = q && q.ok ? `<img alt="Proof of delivery" src="data:image/jpeg;base64,${q.img.replace(/\s/g, '')}">` : `<div class="err">${esc((q && q.error) || 'Could not load the image.')}</div>`;
+  });
+  $('wa').onclick = () => { const t = `Your BoxUp parcel${o ? ' ' + o.id : ''} (Mark Express AWB ${r.awb}): ${fin}.\nTrack: ${LINK}${r.awb}`; window.open('https://wa.me/' + (o && o.phone ? '91' + String(o.phone).replace(/\D/g, '').slice(-10) : '') + '?text=' + encodeURIComponent(t), '_blank'); };
+}
+
+/* ---------- pincode check ---------- */
+function drawPin(){
+  const m = $('main');
+  m.innerHTML = apiErr() + `<div class="grid2" style="grid-template-columns:minmax(260px,400px) 1fr"><div class="card"><h3>📍 Does Mark Express deliver here?</h3><div class="s">One pincode, or paste many (one per line, up to 40) to check a whole sheet before printing.</div>
+    <textarea id="pins" placeholder="462043&#10;400028">${esc(LAST.pinQ || '')}</textarea><div class="bar" style="margin-top:10px"><button class="b g" id="pg">Check pincodes</button><button class="b" id="pfill">Use not-booked orders</button></div></div>
+    <div class="card"><h3>Result</h3><div id="pres" class="note">Results show here.</div></div></div>`;
+  $('pg').onclick = pinCheck;
+  $('pfill').onclick = async () => { try{ await loadOrders(); }catch(e){} $('pins').value = [...new Set((ORD || []).filter(o => bookState(o)[0] !== 'booked').map(o => o.pin).filter(p => /^\d{6}$/.test(p)))].slice(0, 40).join('\n'); };
+  if(LAST.pin) showPin(LAST.pin);
+}
+async function pinCheck(){
+  const v = $('pins').value; LAST.pinQ = v; const pins = [...new Set(v.split(/[\s,;]+/).filter(p => /^\d{6}$/.test(p)))];
+  if(!pins.length){ toast('Type 6-digit pincodes.'); return; }
+  $('pres').innerHTML = `<span class="spin"></span>Checking ${pins.length} pincode${pins.length > 1 ? 's' : ''}…`;
+  let r = null; try{ r = await mx('pin', { pins: pins.join(',') }); }catch(e){}
+  if(!r || !r.ok){ $('pres').innerHTML = `<div class="err">${esc((r && r.error) || 'Could not reach Mark Express.')}</div>`; return; }
+  LAST.pin = r.list; showPin(r.list);
+}
+function showPin(list){
+  const res = p => { const d = p.areas.filter(a => /^delivery/i.test(a.type)).length; if(!p.found || !p.areas.length) return ['✕ Not served', 'nb', d]; if(d === p.areas.length) return ['✓ Delivers', 'bk', d]; if(!d) return ['✕ Non delivery', 'nb', d]; return ['Check area', 'er', d]; };
+  $('pres').innerHTML = `<div class="tw"><table><thead><tr><th>Pincode</th><th>Branch</th><th>Areas</th><th>Fast track</th><th>Result</th></tr></thead><tbody>${list.map((p, i) => { const r = res(p), fast = p.areas.filter(a => /yes/i.test(a.fast)).length;
+    return `<tr class="clk" data-i="${i}"><td class="m">${esc(p.pin)}</td><td>${esc(p.branch ? p.branch.BranchName : '-')}</td><td>${r[2]} of ${p.areas.length} deliver</td><td>${fast === p.areas.length && fast ? 'Yes' : fast ? 'Some' : 'No'}</td><td><span class="pl ${r[1]}">${r[0]}</span></td></tr>
+    <tr hidden id="pd${i}"><td colspan="5">${p.areas.map(a => `<div class="ar"><span>${esc(a.area)}</span><span class="${/^delivery/i.test(a.type) ? 'y' : 'n'}">${esc(a.type)}${/yes/i.test(a.fast) ? ' · Fast track' : ''}</span></div>`).join('')}
+      ${p.branch ? `<div class="note">Branch ${esc(p.branch.BranchName)} (hub ${esc(p.branch.HubName)}) · ${esc([p.branch.Address1, p.branch.Address2, p.branch.City, p.branch.PinCode].filter(Boolean).join(', '))} · ${esc(p.branch.PhoneNo || '')} ${esc(p.branch.MobileNo || '')}</div>` : ''}</td></tr>`; }).join('')}</tbody></table></div><div class="note">Click a row to see every area and the branch phone.</div>`;
+  $('pres').querySelectorAll('tr.clk').forEach(t => t.onclick = () => { const d = $('pd' + t.dataset.i); d.hidden = !d.hidden; });
+}
+
+/* ---------- branches ---------- */
+function drawBr(){
+  const m = $('main');
+  m.innerHTML = apiErr() + `<div class="bar" style="max-width:900px"><input class="q" id="bq" placeholder="City, e.g. Bhopal" value="${esc(LAST.brQ || '')}"><select id="bt"><option value="">Type: All</option><option>HUB</option><option>MAIN BRANCH</option><option>SATTELITE POINT</option></select><select id="bby"><option value="city">by City</option><option value="state">by State</option></select><button class="b g" id="bg">Search</button></div>
+    <div class="grid2"><div class="card"><h3 id="bh">Branches</h3><div id="bres" class="note">Search a city or state.</div></div><div class="card"><h3>Branch details</h3><div id="bdet" class="note">Click a branch to see its address and phone.</div></div></div>`;
+  $('bg').onclick = async () => {
+    const q = $('bq').value.trim(); if(!q){ toast('Type a city or state.'); return; } LAST.brQ = q;
+    $('bres').innerHTML = '<span class="spin"></span>Searching…';
+    let r = null; try{ r = await mx('branches', { type:$('bt').value, city:$('bby').value === 'city' ? q : '', state:$('bby').value === 'state' ? q : '' }); }catch(e){}
+    if(!r || !r.ok){ $('bres').innerHTML = `<div class="err">${esc((r && r.error) || 'Could not reach Mark Express.')}</div>`; return; }
+    $('bh').textContent = `Branches in ${q.toUpperCase()} (${r.list.length})`;
+    $('bres').innerHTML = r.list.length ? `<div class="tw"><table><thead><tr><th>Branch</th><th>Type</th><th>Hub</th><th>Pincode</th></tr></thead><tbody>${r.list.map(b => `<tr class="clk" data-n="${esc(b.BranchName)}"><td><b>${esc(b.BranchName)}</b></td><td><span class="pl ${/HUB/.test(b.BranchType) ? 'tr' : /MAIN/.test(b.BranchType) ? 'bk' : 'er'}">${esc(b.BranchType)}</span></td><td>${esc(b.HubName)}</td><td>${esc(b.PinCode)}</td></tr>`).join('')}</tbody></table></div>` : 'No branches found.';
+    $('bres').querySelectorAll('tr.clk').forEach(t => t.onclick = () => branch(t.dataset.n));
+  };
+  $('bq').onkeydown = e => { if(e.key === 'Enter') $('bg').click(); };
+}
+async function branch(n){
+  $('bdet').innerHTML = '<span class="spin"></span>Loading…';
+  let r = null; try{ r = await mx('net', { q:n }); }catch(e){}
+  if(!r || !r.ok || !r.branch){ $('bdet').innerHTML = `<div class="err">${esc((r && r.error) || 'No details found.')}</div>`; return; }
+  const box = (t, b) => b && b.BranchName ? `<div style="margin-bottom:12px"><b>${t}: ${esc(b.BranchName)}</b><div class="note" style="margin:2px 0 6px">${esc(b.FrenchiseeName || '')}</div>
+    <div class="ar"><span>Address</span><b style="text-align:right">${esc([b.Address1, b.Address2, b.Address3, b.City, b.PinCode, b.State].filter(Boolean).join(', '))}</b></div>
+    <div class="ar"><span>Phone</span><b>${esc(b.PhoneNo || '-')}</b></div><div class="ar"><span>Mobile</span><b>${esc(b.MobileNo || '-')}</b></div><div class="ar"><span>Email</span><b>${esc(b.EMail || '-')}</b></div></div>` : '';
+  $('bdet').innerHTML = `<span class="pl tr">${esc(r.type)}</span><div style="margin-top:10px">${box('Branch', r.branch)}${box('Parent', r.parent)}${box('Hub', r.hub)}</div>${r.children.length ? `<div class="note">Branches under this hub: ${r.children.map(esc).join(', ')}</div>` : ''}
+    <button class="b sm" id="cp">📋 Copy contact</button>`;
+  $('cp').onclick = () => { const b = r.branch, t = [b.BranchName, [b.Address1, b.Address2, b.Address3, b.City, b.PinCode].filter(Boolean).join(', '), 'Ph: ' + (b.PhoneNo || ''), 'Mob: ' + (b.MobileNo || '')].join('\n'); navigator.clipboard.writeText(t).then(() => toast('Copied.'), () => toast(t, 8000)); };
+}
+
+/* ---------- AWB stock ---------- */
+async function drawStock(){
+  const m = $('main'); m.innerHTML = '<div class="card"><span class="spin"></span>Loading stock…</div>';
+  let r = null; try{ r = await fetch(API + '?action=awbs&courier=mx&t=' + Date.now()).then(x => x.json()); }catch(e){}
+  if(!r || !r.ok){ m.innerHTML = '<div class="err">Could not load the Mark Express stock.</div>'; return; }
+  try{ await loadOrders(); }catch(e){}
+  const free = (r.free || []).map(x => x.awb), booked = Object.keys(BOOKED).filter(k => BOOKED[k].status === 'Booked').length;
+  m.innerHTML = `<div class="kp"><div class="k g"><b>${free.length}</b><small>Free</small></div><div class="k"><b>${r.used || 0}</b><small>Used on labels</small></div><div class="k bl"><b>${booked}</b><small>Booked by BoxUp</small></div></div>
+    <div class="card"><h3>Mark Express dockets</h3><div class="s">Same stock the label generator prints from.</div>
+    ${free.length < 10 ? `<div class="warn">⚠ Only ${free.length} Mark Express docket${free.length === 1 ? '' : 's'} left${free.length ? ' (' + esc(free[0]) + (free.length > 1 ? ' – ' + esc(free[free.length - 1]) : '') + ')' : ''}. Ask Mark Express for the next series, then add it in the label generator: Quick access › Users, Access &amp; Docket › Dockets &amp; AWBs.</div>` : ''}
+    <div class="note">Free now: ${free.length ? free.map(esc).join(', ') : 'none'}</div></div>`;
+}
+
+/* ---------- tabs ---------- */
+function setTab(t){ TAB = t; try{ localStorage.setItem('mx.tab', t); }catch(e){} document.querySelectorAll('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.t === t)); draw(); }
+function draw(){ ({ book:drawBook, track:drawTrack, pin:drawPin, br:drawBr, stock:drawStock }[TAB] || drawBook)(); }
+document.querySelectorAll('#tabs button').forEach(b => b.onclick = () => setTab(b.dataset.t));
+setTab(TAB); status();
+</script></body></html>
