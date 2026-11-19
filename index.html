@@ -65,7 +65,7 @@ try{ TAB = localStorage.getItem('mx.tab') || 'book'; }catch(e){}
 /* ---------- API status ---------- */
 async function status(){
   const t = $('tok');
-  try{ const r = await mx('status'); if(r.ok){ t.className = 'tok on'; t.innerHTML = '<i></i>API connected' + (r.validTill ? ' · token valid till ' + new Date(r.validTill).toLocaleTimeString('en-IN', {hour:'numeric', minute:'2-digit'}) : ''); }
+  try{ const r = await mx('status'); if(r.ok){ t.className = 'tok on'; t.innerHTML = '<i></i>API connected · auto-renews'; t.title = r.validTill ? 'Current token valid till ' + new Date(r.validTill).toLocaleTimeString('en-IN', {hour:'numeric', minute:'2-digit'}) + '. A new one is fetched automatically.' : ''; }
     else { t.className = 'tok off'; t.innerHTML = '<i></i>API not connected'; t.title = r.error || ''; window.API_ERR = r.error; if(TAB !== 'stock') draw(); } }
   catch(e){ t.className = 'tok off'; t.innerHTML = '<i></i>Cannot reach BoxUp script'; }
 }
@@ -156,8 +156,8 @@ function showTrack(r){
   const cls = /DELIVERED/i.test(fin) && !/UN.?DELIVER|NOT/i.test(fin) ? 'g' : /RTO|RETURN/i.test(fin) ? 'r' : 'bl';
   $('tres').innerHTML = `<div class="grid2"><div class="card"><h3>${o ? esc(o.id) + ' · ' + esc(o.name) : 'AWB ' + esc(r.awb)}</h3><div class="s">${esc([b.Product, b.GoodsType, (b.Pcs || 1) + ' pcs', 'Booked ' + (b.AWBDate || '') + ' ' + (b.AWBTime || '')].filter(Boolean).join(' · '))}</div>
     <div class="kp" style="grid-template-columns:1fr 1fr;margin-bottom:12px"><div class="k ${cls}"><small>CURRENT STATUS</small><b style="font-size:18px">${esc(fin)}</b><small>${esc(f.Date || '')}</small></div><div class="k"><small>FROM → TO</small><b style="font-size:15px">${esc(b.AWBFrom || '')} → ${esc(b.AWBTo || '')}</b><small>${esc(b.SenderNM || '')} → ${esc(b.ReceiverNM || '')}</small></div></div>
-    <div class="tl">${ev.map((e, i) => `<div class="${i === 0 ? 'f' : ''}"><b>${esc(e.OpType)} · ${esc(e.EntryBy)}</b>${esc(e.Description)}${e.Receiver ? ' · Receiver ' + esc(e.Receiver) : ''} · ${esc(e.OpDate)} ${esc(e.OpTime)}</div>`).join('')}<div><b>Booked · ${esc(b.AWBFrom || '')}</b>${esc(b.AWBDate || '')} ${esc(b.AWBTime || '')}</div></div>
-    ${L.Branch ? `<div class="note">Last location: <b>${esc(L.Branch)}</b> · ${esc(L.Address || '')}${L.PH ? ' · ' + esc(L.PH) : ''}</div>` : ''}</div>
+    <div class="tl">${ev.map((e, i) => `<div class="${i === 0 ? 'f' : ''}"><b>${esc(e.OpType)}${e.EntryBy ? ' · ' + esc(e.EntryBy) : ''}</b>${esc(e.Description)}${e.Receiver ? ' · Receiver ' + esc(e.Receiver) : ''} · ${esc(e.OpDate)} ${esc(e.OpTime)}</div>`).join('')}<div><b>Booked · ${esc(b.AWBFrom || '')}</b>${esc(b.AWBDate || '')} ${esc(b.AWBTime || '')}</div></div>
+    ${r.source === 'public' ? '<div class="note">Booked at the Mark Express counter, so full POD details come from their public tracking page.</div>' : ''}${L.Branch ? `<div class="note">Last location: <b>${esc(L.Branch)}</b> · ${esc(L.Address || '')}${L.PH ? ' · ' + esc(L.PH) : ''}</div>` : ''}</div>
     <div class="card"><h3>Proof of delivery</h3><div class="s">Shows once Mark Express delivers. Click to view; right-click the image to save.</div>
     <div class="pod">${[['drs','📄 Delivery sheet (DRS)', p.DRSImgID],['pod','🧾 POD image', p.PODImgID],['sign','✍ Receiver signature', p.DigitalSignImgID]].map(x => `<button data-k="${x[0]}" data-id="${esc(x[2] || '')}" ${x[2] ? '' : 'disabled'}>${x[1]}<br><small>${x[2] ? 'Click to view' : 'Not yet'}</small></button>`).join('')}</div>
     <div id="pimg" style="margin-top:12px"></div>
