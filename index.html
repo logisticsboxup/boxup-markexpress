@@ -146,6 +146,7 @@ function drawTrack(){
   const m = $('main'), d = LAST.track;
   m.innerHTML = apiErr() + `<div class="bar" style="max-width:720px"><input class="q" id="tq" placeholder="AWB number e.g. 800355305" value="${esc(LAST.trackQ || '')}" inputmode="numeric"><button class="b g" id="tg">Track</button></div><div id="tres"></div>`;
   $('tg').onclick = () => track($('tq').value.trim()); $('tq').onkeydown = e => { if(e.key === 'Enter') $('tg').click(); };
+  $('tq').oninput = () => { LAST.track = null; $('tres').innerHTML = ''; };
   if(d) showTrack(d); else if(LAST.trackQ) track(LAST.trackQ);
 }
 async function track(awb){
@@ -156,11 +157,11 @@ async function track(awb){
   LAST.track = r; showTrack(r);
 }
 function showTrack(r){
-  const b = r.booking || {}, o = (ORD || []).find(x => x.awb === r.awb) || null, f = r.final || {}, L = r.last || {}, p = r.proof || {};
+  const b = r.booking || {}, o = (ORD || []).find(x => x.awb === r.awb || String(x.awbs || '').split(/[,;\s]+/).indexOf(r.awb) >= 0) || null, f = r.final || {}, L = r.last || {}, p = r.proof || {};
   const ev = (r.delivery || []).concat(r.track || []).slice().reverse();
   const fin = f.Description || (ev[0] && ev[0].Description) || 'Booked';
   const cls = /DELIVERED/i.test(fin) && !/UN.?DELIVER|NOT/i.test(fin) ? 'g' : /RTO|RETURN/i.test(fin) ? 'r' : 'bl';
-  $('tres').innerHTML = `<div class="grid2"><div class="card"><h3>${o ? esc(o.id) + ' · ' + esc(o.name) : 'AWB ' + esc(r.awb)}</h3><div class="s">${esc([b.Product, b.GoodsType, (b.Pcs || 1) + ' pcs', 'Booked ' + (b.AWBDate || '') + ' ' + (b.AWBTime || '')].filter(Boolean).join(' · '))}</div>
+  $('tres').innerHTML = `<div class="grid2"><div class="card"><h3>AWB ${esc(r.awb)}${o ? ' · ' + esc(o.id) + ' · ' + esc(o.name) : ''}</h3><div class="s">${esc([b.Product, b.GoodsType, (b.Pcs || 1) + ' pcs', 'Booked ' + (b.AWBDate || '') + ' ' + (b.AWBTime || '')].filter(Boolean).join(' · '))}</div>
     <div class="kp" style="grid-template-columns:1fr 1fr;margin-bottom:12px"><div class="k ${cls}"><small>CURRENT STATUS</small><b style="font-size:18px">${esc(fin)}</b><small>${esc(f.Date || '')}</small></div><div class="k"><small>FROM → TO</small><b style="font-size:15px">${esc(b.AWBFrom || '')} → ${esc(b.AWBTo || '')}</b><small>${esc(b.SenderNM || '')} → ${esc(b.ReceiverNM || '')}</small></div></div>
     <div class="tl">${ev.map((e, i) => `<div class="${i === 0 ? 'f' : ''}"><b>${esc(e.OpType)}${e.EntryBy ? ' · ' + esc(e.EntryBy) : ''}</b>${esc(e.Description)}${e.Receiver ? ' · Receiver ' + esc(e.Receiver) : ''} · ${esc(e.OpDate)} ${esc(e.OpTime)}</div>`).join('')}<div><b>Booked · ${esc(b.AWBFrom || '')}</b>${esc(b.AWBDate || '')} ${esc(b.AWBTime || '')}</div></div>
     ${r.source === 'public' ? '<div class="note">Booked at the Mark Express counter, so full POD details come from their public tracking page.</div>' : ''}${L.Branch ? `<div class="note">Last location: <b>${esc(L.Branch)}</b> · ${esc(L.Address || '')}${L.PH ? ' · ' + esc(L.PH) : ''}</div>` : ''}</div>
